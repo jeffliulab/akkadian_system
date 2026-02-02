@@ -1,64 +1,86 @@
-// 后端 API 地址 (本地调试默认端口)
-const API_URL = "http://localhost:8000/api/v1/translate";
+// ✅ 你的 Hugging Face Space 后端 API 地址
+const API_URL = "https://jeffliulab-akkadian-backend.hf.space/api/v1/translate";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const translateBtn = document.getElementById("translate-btn");
+    
+    // 绑定点击事件
+    translateBtn.addEventListener("click", handleAction);
+});
 
 async function handleAction() {
-    const textInput = document.getElementById('inputText');
-    const modelSelect = document.getElementById('modelSelect');
-    const tabletContent = document.getElementById('tabletContent');
-    const runBtn = document.getElementById('runBtn');
-
-    const text = textInput.value.trim();
-    const model = modelSelect.value;
-
-    // 1. 基础验证：非空且为英文
-    // 允许英文字母、数字、常见标点符号
-    const isEnglish = /^[A-Za-z0-9\s.,!?'"()\-]+$/.test(text);
-
+    // 1. 获取 DOM 元素
+    const inputField = document.getElementById("input-text");
+    const outputArea = document.getElementById("output-text");
+    const modelSelect = document.getElementById("model-select");
+    const translateBtn = document.getElementById("translate-btn");
+    
+    // 2. 基础验证
+    const text = inputField.value.trim();
     if (!text) {
-        return; 
-    }
-
-    if (!isEnglish) {
-        tabletContent.innerHTML = `<span class="error-text">ERROR: ONLY ENGLISH INPUT ALLOWED</span>`;
+        // 简单的抖动效果或警告
+        outputArea.innerText = "Please inscribe some text on the tablet first.";
+        outputArea.style.color = "#8b0000"; // 深红色警告
         return;
     }
 
-    // 2. UI 状态更新：显示加载中
-    runBtn.disabled = true;
-    runBtn.innerText = "CARVING...";
-    tabletContent.style.opacity = "0.5";
+    // 获取用户选择的模型 ID ("default" 或 "byt5")
+    const selectedModel = modelSelect.value; 
+
+    // 3. 进入“加载中”状态 UI
+    const originalBtnText = translateBtn.innerText;
+    translateBtn.innerText = "Deciphering...";
+    translateBtn.disabled = true;
+    translateBtn.style.cursor = "wait";
+    
+    outputArea.style.color = "inherit"; // 重置颜色
+    outputArea.style.opacity = "0.6";
+    
+    // 根据选择的模型显示不同的加载提示
+    if (selectedModel === "byt5") {
+        outputArea.innerText = "Consulting the Neural Network Scribe (AI)...";
+    } else {
+        outputArea.innerText = "Consulting the Standard Algorithm...";
+    }
 
     try {
-        // 3. 发送请求给后端
+        // 4. 发送 POST 请求给后端
         const response = await fetch(API_URL, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
+            // 将文本和模型 ID 打包发送
             body: JSON.stringify({
                 text: text,
-                model_id: model
+                model_id: selectedModel 
             })
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Server Error: ${response.status}`);
         }
 
         const data = await response.json();
 
-        // 4. 渲染结果
-        // 这里直接显示后端传回来的确定性楔形文字
-        tabletContent.innerText = data.translation;
-        tabletContent.classList.remove('error-text');
+        // 5. 显示翻译结果
+        // 后端返回格式预期: { "translation": "...", "model_used": "...", ... }
+        if (data.translation) {
+             outputArea.innerText = data.translation;
+        } else {
+             // 兼容性处理
+             outputArea.innerText = JSON.stringify(data);
+        }
 
     } catch (error) {
-        console.error('Fetch error:', error);
-        tabletContent.innerHTML = `<span class="error-text">CONNECTION ERROR: Backend Offline</span>`;
+        console.error("Translation Error:", error);
+        outputArea.innerText = "Error: The scribe could not be reached. Please check your connection.";
+        outputArea.style.color = "#8b0000";
     } finally {
-        // 5. 恢复 UI 状态
-        runBtn.disabled = false;
-        runBtn.innerText = "SHOW";
-        tabletContent.style.opacity = "1";
+        // 6. 恢复 UI 状态
+        outputArea.style.opacity = "1";
+        translateBtn.innerText = originalBtnText;
+        translateBtn.disabled = false;
+        translateBtn.style.cursor = "pointer";
     }
 }

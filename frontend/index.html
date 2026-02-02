@@ -3,27 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akkadian Tablet Generator</title>
+    <title>Akkadian Tablet Translator</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
-        <section class="input-area">
-            <textarea id="inputText" placeholder="Enter English text here..."></textarea>
-            <div class="controls">
-                <select id="modelSelect">
-                    <option value="default">Default Engine</option>
-                    </select>
-                <button id="runBtn" onclick="handleAction()">SHOW</button>
-            </div>
-        </section>
 
-        <section class="display-area">
-            <div id="tablet" class="clay-tablet">
-                <p id="tabletContent">Ready to carve...</p>
+    <div class="container">
+        <header>
+            <h1>Cuneiform Decoder</h1>
+            <p class="subtitle">Akkadian to English Translator</p>
+        </header>
+
+        <div class="tablet-interface">
+            <div class="input-section">
+                <label for="input-text">Inscribe Akkadian Text (Transliteration):</label>
+                <textarea id="input-text" placeholder="e.g., a-wi-lum su-ú..."></textarea>
             </div>
-        </section>
+
+            <div class="control-panel">
+                <div class="selector-wrapper">
+                    <label for="model-select">Select Scribe Engine:</label>
+                    <select id="model-select">
+                        <option value="default">🗿 Standard (Rule-based)</option>
+                        <option value="byt5">🤖 AI Model (ByT5 Neural Network)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="translate-btn" class="stone-btn">Decipher</button>
+            
+            <div class="output-section">
+                <label for="output-text">Translation:</label>
+                <div id="output-text" class="result-box"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Powered by CFO Labs & Hugging Face</p>
+        </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
