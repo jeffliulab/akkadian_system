@@ -1,76 +1,139 @@
+:root {
+    --clay-bg: #dcb386;
+    --clay-shadow: #b68d60;
+    --stone-dark: #2c2c2c;
+    --bg-color: #f4f1ea;
+}
+
 body {
-    margin: 0; padding: 40px;
-    background: #e0e0e0;
-    font-family: 'Courier New', Courier, monospace;
-    display: flex; justify-content: center;
+    font-family: 'Cinzel', serif; /* 古朴字体 */
+    background-color: var(--bg-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    color: var(--stone-dark);
 }
 
 .main-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    width: 100%;
-    max-width: 1200px;
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
 }
 
-/* 输入区 */
-.input-area { display: flex; flex-direction: column; gap: 20px; }
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #4a3b2a;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 2rem;
+    font-family: sans-serif;
+}
+
+/* 输入区样式 */
+.input-area {
+    margin-bottom: 2rem;
+}
 
 textarea {
-    width: 100%; height: 300px;
-    padding: 20px; border: 2px solid #999;
-    background: #fdfdfd; font-size: 18px;
-    resize: none; box-sizing: border-box;
-}
-
-.controls { display: flex; gap: 10px; }
-
-#modelSelect { flex: 1; height: 45px; border: 2px solid #999; padding: 0 10px; }
-
-#runBtn {
-    width: 120px; height: 45px;
-    background: #333; color: white;
-    border: none; cursor: pointer;
-    font-weight: bold; font-size: 16px;
-}
-
-#runBtn:hover { background: #000; }
-
-/* 右侧石板区 */
-.display-area { display: flex; align-items: flex-start; }
-
-.clay-tablet {
-    width: 100%; min-height: 400px;
-    background: #d2b48c; /* 泥土色 */
-    border-radius: 15px;
-    padding: 40px;
-    position: relative;
-    box-shadow: 
-        15px 15px 30px rgba(0,0,0,0.3), 
-        inset 5px 5px 15px rgba(255,255,255,0.2),
-        inset -5px -5px 15px rgba(0,0,0,0.4);
-    display: flex; align-items: center; justify-content: center;
+    width: 100%;
+    height: 80px;
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: sans-serif;
+    resize: vertical;
     box-sizing: border-box;
 }
 
-/* 模拟泥板表面的不规则边缘 */
-.clay-tablet::before {
-    content: ""; position: absolute;
-    top: -5px; left: -5px; right: -5px; bottom: -5px;
-    border: 10px solid transparent;
-    border-radius: 20px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
-    pointer-events: none;
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
 }
 
-#tabletContent {
-    font-size: 28px;
-    color: #4a3c28;
-    text-align: center;
-    line-height: 1.5;
-    text-shadow: 1px 1px 1px rgba(255,255,255,0.4);
-    word-break: break-all;
+select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #999;
+    background: white;
+    cursor: pointer;
 }
 
-/* 错误提示样式 */
-.error-text { color: #8b0000 !important; font-size: 20px !important; font-weight: bold; }
+button {
+    background-color: #8b5a2b;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+button:hover {
+    background-color: #6d421b;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* 泥板展示区 */
+.display-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tablet-frame {
+    background: var(--clay-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.2), /* 内阴影增加立体感 */
+        10px 10px 20px rgba(0,0,0,0.3); /* 外阴影 */
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--clay-shadow);
+}
+
+.clay-tablet {
+    width: 100%;
+}
+
+.cuneiform-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4a3b2a;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.4), -1px -1px 2px rgba(0,0,0,0.2); /* 刻字效果 */
+    word-wrap: break-word;
+}
+
+.status-text {
+    margin-top: 15px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    height: 1.2rem;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: #999;
+}

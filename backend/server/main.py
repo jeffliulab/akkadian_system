@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from transformers import T5ForConditionalGeneration, AutoTokenizer
-import backend.default as default_engine # 引用你的哈希逻辑
+import server.default as default_engine
 
 # --- 配置部分 ---
 # 你的模型仓库 ID (直接从 Hugging Face 拉取)

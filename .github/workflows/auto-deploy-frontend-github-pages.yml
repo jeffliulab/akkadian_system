@@ -1,0 +1,47 @@
+name: Deploy Frontend to GitHub Pages
+
+on:
+  # 监听 main 分支的推送
+  push:
+    branches: ["main"]
+    # 只有当 frontend 文件夹发生变动时才触发（节省资源）
+    paths:
+      - 'frontend/**'
+
+  # 允许在 Actions 页面手动点击按钮触发（方便测试）
+  workflow_dispatch:
+
+# 设置权限 (GitHub Pages 部署必须)
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 并发控制：如果有多个部署同时进行，取消旧的，只跑最新的
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # 🚨 关键设置：告诉 GitHub 你的网页都在 frontend 文件夹里
+          # 如果你以后改了文件夹名，记得改这里
+          path: './frontend'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
