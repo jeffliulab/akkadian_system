@@ -3,11 +3,18 @@ name: Sync Backend to Hugging Face Hub
 on:
   push:
     branches: [ main ]
-    # 关键设置：只有 backend 文件夹发生变化时才触发
     paths:
       - 'backend/**'
-  # 允许手动点击按钮触发（方便测试）
   workflow_dispatch:
+
+# 添加权限配置
+permissions:
+  contents: read
+
+# 修改并发组名，避免与 pages 冲突
+concurrency:
+  group: "huggingface-sync"
+  cancel-in-progress: true
 
 jobs:
   sync-to-hub:
@@ -24,20 +31,10 @@ jobs:
           HF_USERNAME: jeffliulab
           HF_SPACE_NAME: akkadian-backend
         run: |
-          # 1. 配置 Git 身份
           git config --global user.email "bot@github.com"
           git config --global user.name "GitHub Action"
-          
-          # 2. 【关键】进入 backend 文件夹
-          # 这步操作保证了只把 backend 里面的内容推上去，而不是整个仓库
           cd backend
-          
-          # 3. 初始化临时仓库并提交
-          # 因为我们是在子文件夹里操作，所以相当于建立了一个全新的 Git 历史
           git init
           git add .
           git commit -m "Auto-deploy from GitHub: $(date)"
-          
-          # 4. 强制推送到 Hugging Face
-          # --force 是必须的，因为我们要覆盖 Space 里原有的内容
           git push --force https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$HF_SPACE_NAME main
