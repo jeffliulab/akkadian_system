@@ -1,0 +1,16 @@
+# Core deep learning
+torch>=2.0.0
+numpy>=1.24.0
+
+# Data processing
+pandas>=2.0.0
+dill>=0.3.7
+
+# NLP evaluation metrics
+sacrebleu>=2.3.0
+
+# Optional: Advanced optimizers (only needed if using 'rectified' regularization)
+# radam>=0.0.1
+
+# Utilities
+tqdm>=4.65.0

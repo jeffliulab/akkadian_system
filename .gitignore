@@ -1,0 +1,30 @@
+.vscode
+.cursor
+__pycache__
+dataset
+checkpoints_Transformer
+submission.csv
+*.csv
+*.pth
+*.bin
+*.safetensors
+
+# 防止忘记一些细节的文件，自用
+思路.md
+中间文件
+架构备忘录.md
+
+# README(Temp)
+README_CN.md
+
+# Tufts HPC related
+conda_script.sh
+
+# 0130
+kaggle_inference.py
+quick_check_model.py
+
+# 0201
+byt5_akkadian_finetuned
+final_akkadian_model
+5_kaggle_submit.py

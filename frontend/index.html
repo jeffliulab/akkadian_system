@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akkadian Tablet Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <section class="input-area">
+            <textarea id="inputText" placeholder="Enter English text here..."></textarea>
+            <div class="controls">
+                <select id="modelSelect">
+                    <option value="default">Default Engine</option>
+                    </select>
+                <button id="runBtn" onclick="handleAction()">SHOW</button>
+            </div>
+        </section>
+
+        <section class="display-area">
+            <div id="tablet" class="clay-tablet">
+                <p id="tabletContent">Ready to carve...</p>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
