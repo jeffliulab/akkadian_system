@@ -1,0 +1,317 @@
+:root {
+    --clay-bg: #dcb386;
+    --stone-base: #3e3b36; /* 深色玄武岩色 */
+    --stone-light: #5a554e;
+    --gold-accent: #c5a059;
+    --text-engrave: #1a1816;
+}
+
+body {
+    font-family: 'Cinzel', serif;
+    margin: 0;
+    min-height: 100vh;
+    color: #2c2c2c;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1510;
+}
+
+/* 背景层：模拟美索不达米亚平原的黄昏 */
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 30%, #5d4037 0%, #2e2018 60%, #0f0b08 100%);
+    box-shadow: inset 0 0 150px rgba(0,0,0,0.8);
+}
+
+.main-container {
+    width: 95%;
+    max-width: 1100px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.2rem;
+    color: var(--clay-bg);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: #a89f91;
+    margin-bottom: 2rem;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+
+/* === 核心布局区域 === */
+.workspace {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 垂直居中 */
+    gap: 40px;
+    perspective: 1500px; /* 为3D效果提供透视 */
+}
+
+/* === 左侧：羊皮纸风格输入区 === */
+.input-panel {
+    flex: 1;
+    max-width: 450px;
+    text-align: left;
+}
+
+.scroll-paper {
+    background: #f4e4bc;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.5),
+        inset 0 0 40px rgba(160, 115, 60, 0.2);
+    position: relative;
+    border: 1px solid #d4c5a0;
+}
+
+/* 装饰性边角 */
+.scroll-paper::before {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 2px solid #d4c5a0;
+    pointer-events: none;
+}
+
+.panel-label {
+    display: block;
+    font-weight: bold;
+    color: #6d4c41;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border: 2px solid #cbbba0;
+    background: rgba(255,255,255,0.5);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif; /* 输入文字也用衬线体增加沉浸感 */
+    resize: vertical;
+    box-sizing: border-box;
+    color: #4e342e;
+    transition: border-color 0.3s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--gold-accent);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.select-wrapper {
+    flex: 1;
+}
+
+.select-wrapper label {
+    display: block;
+    font-size: 0.8rem;
+    color: #6d4c41;
+    margin-bottom: 5px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.95rem;
+    border: 1px solid #cbbba0;
+    background: rgba(255,255,255,0.8);
+    color: #4e342e;
+    font-family: 'Cinzel', serif;
+}
+
+button {
+    background: linear-gradient(135deg, #8b5a2b, #5d3a1a);
+    color: #f4e4bc;
+    border: 1px solid #3e2723;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.2s;
+    height: 46px; /* Align with select box */
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, #a06d3d, #6d421b);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background: #797979;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.status-text {
+    margin-top: 15px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    min-height: 1.2rem;
+    font-weight: bold;
+}
+
+/* === 右侧：3D 石碑展示区 === */
+.display-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tablet-container-3d {
+    width: 320px;
+    height: 480px;
+    /* 关键：让石碑有3D旋转效果 */
+    transform: rotateY(-15deg) rotateX(5deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+/* 鼠标悬停时稍微回正，增加交互感 */
+.workspace:hover .tablet-container-3d {
+    transform: rotateY(-5deg) rotateX(2deg);
+}
+
+.stone-tablet {
+    width: 100%;
+    height: 100%;
+    background: var(--stone-base);
+    /* 石头纹理 */
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+    border-radius: 10px 10px 4px 4px; /* 顶部稍微圆润，像石碑 */
+    box-shadow: 
+        inset 5px 5px 15px rgba(255,255,255,0.05), /* 顶部高光 */
+        inset -10px -10px 30px rgba(0,0,0,0.8),   /* 底部阴影 */
+        25px 25px 50px rgba(0,0,0,0.6);            /* 投射阴影 */
+    position: relative;
+    border: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+/* 石碑厚度效果（伪元素） */
+.stone-tablet::after {
+    content: '';
+    position: absolute;
+    top: 4px; bottom: -8px; right: -8px; width: 8px;
+    background: #25221e;
+    transform: skewY(45deg);
+    transform-origin: left;
+    border-radius: 2px;
+}
+.stone-tablet::before {
+    content: '';
+    position: absolute;
+    bottom: -8px; left: 6px; right: -8px; height: 8px;
+    background: #1a1816;
+    transform: skewX(45deg);
+    transform-origin: top;
+    border-radius: 2px;
+}
+
+.engraving-area {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 文字垂直居中 */
+    align-items: center;
+    border: 2px solid rgba(0,0,0,0.2); /* 淡淡的内框 */
+    padding: 10px;
+}
+
+/* 楔形文字样式 */
+.cuneiform-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.85); /* 浅色文字 */
+    text-align: center;
+    line-height: 1.4;
+    word-break: break-all;
+    
+    /* 核心：阴刻效果 (Engraved Effect) */
+    text-shadow: 
+        -1px -1px 1px rgba(0,0,0,0.8), /* 内部上阴影 */
+        1px 1px 1px rgba(255,255,255,0.1); /* 内部下高光 */
+    
+    opacity: 0.8;
+}
+
+/* 动画：文字浮现 */
+@keyframes textGlow {
+    0% { opacity: 0; transform: scale(0.95); filter: blur(2px); }
+    50% { opacity: 0.5; color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; } /* 刻写时的魔法金光 */
+    100% { opacity: 0.9; transform: scale(1); color: rgba(255, 255, 255, 0.85); filter: blur(0); }
+}
+
+.animate-reveal {
+    animation: textGlow 1.5s ease-out forwards;
+}
+
+footer {
+    margin-top: 50px;
+    font-size: 0.8rem;
+    color: #666;
+    text-shadow: 0 1px 2px black;
+}
+
+/* 响应式调整：手机端变回上下布局 */
+@media (max-width: 800px) {
+    .workspace {
+        flex-direction: column;
+        gap: 60px;
+    }
+
+    .input-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .tablet-container-3d {
+        transform: rotateX(10deg); /* 手机上只做简单的倾斜 */
+    }
+    
+    .workspace:hover .tablet-container-3d {
+        transform: rotateX(0deg);
+    }
+}

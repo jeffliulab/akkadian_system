@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akkadian Cuneiform Translator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+Cuneiform&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-overlay"></div> <div class="main-container">
+        <header>
+            <h1>Akkadian Inscriptions</h1>
+            <p class="subtitle">English to Akkadian Translation and Inscriptions</p>
+        </header>
+
+        <div class="workspace">
+            
+            <section class="input-panel">
+                <div class="scroll-paper">
+                    <label class="panel-label">Input</label>
+                    <textarea id="inputText" placeholder="Enter English text here to translate to Akkadian and inscribe... (e.g., input 'king' for 'sharrum')"></textarea>
+                    
+                    <div class="controls">
+                        <div class="select-wrapper">
+                            <label for="modelSelect">Engine:</label>
+                            <select id="modelSelect">
+                                <option value="default">Default (Test-Usage)</option>
+                                <option value="byt5">Transformer-ByT5</option>
+                            </select>
+                        </div>
+                        <button id="runBtn">INSCRIBE</button>
+                    </div>
+                    <p id="statusMsg" class="status-text"></p>
+                </div>
+            </section>
+
+            <section class="display-panel">
+                <div class="tablet-container-3d">
+                    <div class="stone-tablet">
+                        <div class="engraving-area">
+                            <p id="tabletContent" class="cuneiform-text">...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        
+        <footer>
+            Powered by Hugging Face Spaces & CFO Labs
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
