@@ -5,7 +5,7 @@ from pathlib import Path
 
 # ================= 配置区 =================
 CONFIG = {
-    "data_dir": "../deep-past-initiative-machine-translation",
+    "data_dir": "../../data/deep-past-initiative-machine-translation",
     "files": {
         "train": "train.csv",
         "sentences": "Sentences_Oare_FirstWord_LinNum.csv",

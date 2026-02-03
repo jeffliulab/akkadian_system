@@ -6,7 +6,7 @@ import glob
 # ================= 配置区 =================
 # 自动定位到 deep-past 数据集目录
 CURRENT_DIR = os.getcwd()
-DATA_DIR = os.path.join(os.path.dirname(CURRENT_DIR), "deep-past-initiative-machine-translation")
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(CURRENT_DIR)), "data", "deep-past-initiative-machine-translation")
 
 # ================= 核心分析引擎 =================
 

@@ -33,4 +33,4 @@ def peek_data(directory):
             print(f"\n[MISSING]: {filename} not found in {directory}")
 
 # 运行检查（假设文件夹在当前目录下）
-peek_data('deep-past-initiative-machine-translation')
+peek_data('../../data/deep-past-initiative-machine-translation')

@@ -11,7 +11,7 @@ import evaluate # 使用 evaluate 库调用 sacrebleu
 
 # ================= 配置区 =================
 # 测试集文件路径
-TEST_FILE = "../deep-past-initiative-machine-translation/test.csv"
+TEST_FILE = "../../data/deep-past-initiative-machine-translation/test.csv"
 # 原始训练清洗文件 (用于计算本地验证分)
 TRAIN_FILE = "clean.csv"
 

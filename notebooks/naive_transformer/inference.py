@@ -166,7 +166,7 @@ def main():
             print(f"  Translated {idx + 1}/{len(test_lines)} sentences...")
 
     # 5. 生成最终提交文件
-    test_csv_path = 'deep-past-initiative-machine-translation/test.csv'
+    test_csv_path = '../../data/deep-past-initiative-machine-translation/test.csv'
     if not os.path.exists(test_csv_path):
         print(f"[Error] {test_csv_path} not found!")
         print("[Info] Creating dummy submission with sequential IDs...")

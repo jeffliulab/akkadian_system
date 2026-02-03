@@ -55,7 +55,7 @@ def split_src_by_anchors(full_text, sentence_group):
     return sentence_srcs, [str(t).strip().lower() for t in translations]
 
 def main():
-    data_dir = "deep-past-initiative-machine-translation"
+    data_dir = "../../data/deep-past-initiative-machine-translation"
     output_dir = "dataset"
     os.makedirs(output_dir, exist_ok=True)
 

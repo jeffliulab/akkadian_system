@@ -49,8 +49,12 @@ async def translate_text(request: TranslationRequest):
     
     # 模式 1: Default (哈希算法 / 规则)
     if request.model_id == "default":
-        # 直接调用你原来写好的 logic
-        return default_engine.predict(input_text)
+        # 【修改点】手动包装成字典，保持和 ByT5 格式一致
+        # 这样前端就能识别到 "translation" 字段，从而不会添加额外的引号
+        return {
+            "translation": default_engine.predict(input_text),
+            "model_used": "default-engine"
+        }
 
     # 模式 2: ByT5 (真实 AI 模型)
     elif request.model_id == "byt5":

@@ -8,35 +8,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Sans+Cuneiform&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-container">
+    <div class="bg-overlay"></div> <div class="main-container">
         <header>
             <h1>Cuneiform Scribe</h1>
             <p class="subtitle">English / Transliteration to Akkadian Decoder</p>
         </header>
 
-        <section class="input-area">
-            <textarea id="inputText" placeholder="Enter text here to inscribe... (e.g., 'sharrum' for king)"></textarea>
+        <div class="workspace">
             
-            <div class="controls">
-                <div class="select-wrapper">
-                    <label for="modelSelect">Engine:</label>
-                    <select id="modelSelect">
-                        <option value="default">Default (Test-Usage)</option>
-                        <option value="byt5">Transformer-ByT5</option>
-                    </select>
+            <section class="input-panel">
+                <div class="scroll-paper">
+                    <label class="panel-label">Scribe's Input</label>
+                    <textarea id="inputText" placeholder="Enter text here to inscribe... (e.g., 'sharrum' for king)"></textarea>
+                    
+                    <div class="controls">
+                        <div class="select-wrapper">
+                            <label for="modelSelect">Engine:</label>
+                            <select id="modelSelect">
+                                <option value="default">Default (Test-Usage)</option>
+                                <option value="byt5">Transformer-ByT5</option>
+                            </select>
+                        </div>
+                        <button id="runBtn">INSCRIBE</button>
+                    </div>
+                    <p id="statusMsg" class="status-text"></p>
                 </div>
-                <button id="runBtn">INSCRIBE</button>
-            </div>
-        </section>
+            </section>
 
-        <section class="display-area">
-            <div class="tablet-frame">
-                <div id="tablet" class="clay-tablet">
-                    <p id="tabletContent" class="cuneiform-text">...</p>
+            <section class="display-panel">
+                <div class="tablet-container-3d">
+                    <div class="stone-tablet">
+                        <div class="engraving-area">
+                            <p id="tabletContent" class="cuneiform-text">...</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <p id="statusMsg" class="status-text"></p>
-        </section>
+            </section>
+
+        </div>
         
         <footer>
             Powered by Hugging Face Spaces & CFO Labs
