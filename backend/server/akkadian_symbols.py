@@ -83,7 +83,7 @@ def to_cuneiform(text):
         if not found:
             if not unknown_active:
                 # 第一次遇到无法匹配的字符，添加考古修复符
-                result.append("[...]") 
+                result.append("...") 
                 unknown_active = True # 进入持续未知状态，后续连续失败将不再添加符号
             i += 1
             

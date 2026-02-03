@@ -2,7 +2,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from transformers import T5ForConditionalGeneration, AutoTokenizer
-import server.default as default_engine
+import default as default_engine
+import akkadian_symbols as symbols
 
 # --- 配置部分 ---
 # 你的模型仓库 ID (直接从 Hugging Face 拉取)
@@ -13,7 +14,7 @@ app = FastAPI()
 # 配置 CORS (允许前端跨域访问)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 生产环境建议改为你的 GitHub Pages 域名
+    allow_origins=["https://jeffliu.github.io"],  # 生产环境建议改为你的 GitHub Pages 域名
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,6 +47,8 @@ async def translate_text(request: TranslationRequest):
     input_text = request.text.strip()
     
     # --- 分流逻辑 ---
+
+    # 待补充：将模式1的哈希改为naive transformer
     
     # 模式 1: Default (哈希算法 / 规则)
     if request.model_id == "default":
