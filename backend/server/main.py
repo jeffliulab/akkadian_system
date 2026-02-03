@@ -56,29 +56,25 @@ async def translate_text(request: TranslationRequest):
             "model_used": "default-engine"
         }
 
-    # 模式 2: ByT5 (真实 AI 模型)
+    # 模式 2: ByT5 (修改后的部分)
     elif request.model_id == "byt5":
         if model is None or tokenizer is None:
-            raise HTTPException(status_code=503, detail="Model not loaded successfully")
+            raise HTTPException(status_code=503, detail="Model not loaded")
         
         try:
-            # 1. 预处理 (ByT5 不需要分词，直接转 input_ids)
+            # 1. ByT5 推理生成拉丁转写 (例如输出 "sharrum")
             input_ids = tokenizer(input_text, return_tensors="pt").input_ids
+            outputs = model.generate(input_ids, max_length=128, num_beams=4)
+            transliteration = tokenizer.decode(outputs[0], skip_special_tokens=True)
             
-            # 2. 推理生成
-            outputs = model.generate(
-                input_ids, 
-                max_length=128,         # 限制生成长度
-                num_beams=4,            # 束搜索，提升质量
-                early_stopping=True
-            )
-            
-            # 3. 解码结果
-            translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            # 2. 【核心新增】调用 symbols 脚本转换为楔形文字
+            cuneiform_text = symbols.to_cuneiform(transliteration)
             
             return {
-                "translation": translated_text,
-                "model_used": "byt5-finetuned",
+                # 我们把转换后的符号发给前端显示在石碑上
+                "translation": cuneiform_text, 
+                "transliteration": transliteration, # 同时发回转写，方便调试
+                "model_used": "byt5-plus-symbols",
                 "original": input_text
             }
         except Exception as e:
